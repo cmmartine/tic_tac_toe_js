@@ -1,7 +1,6 @@
 const gameBoard = (function() {
   'use strict';
- 
- 
+
   let boardSpots = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   const newBoardBtn = document.getElementById('new-game');
   newBoardBtn.addEventListener('click', resetBoard);
@@ -37,7 +36,7 @@ const gameBoard = (function() {
       piece: piece
     };
   }
- 
+
   function resetBoard(e) {
     boardSpots.splice(0, 9);
     boardSpots.push(0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -51,16 +50,14 @@ const gameBoard = (function() {
       spot.innerText = " ";
     });
   }
- 
- 
+
   (function assignPlacing() {
     const placePieces = document.querySelectorAll('.piece-position');
     placePieces.forEach((current) => {
       current.addEventListener('click', placePiece);
     });
   })();
- 
- 
+
   function placePiece(e) {
     if (boardSpots[e.target.dataset.index] === 0) {
       boardSpots[e.target.dataset.index] = currentPlayer.piece;
@@ -83,12 +80,10 @@ const gameBoard = (function() {
       position.classList.remove('player-one');
     }
   }
- 
- 
+
   return {
     boardSpots: boardSpots
   };
- 
- 
+
  })();
  

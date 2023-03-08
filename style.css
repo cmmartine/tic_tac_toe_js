@@ -90,5 +90,15 @@ td {
     height: 100px;
     font-size: 80px;
   }
+
+  .piece-position-taken {
+    width: 100px;
+    height: 100px;
+    font-size: 80px;
+  }
+
+  #current-player {
+    font-size: 30px;
+  }
 }
  
