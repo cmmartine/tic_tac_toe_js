@@ -15,6 +15,8 @@
   margin-top: 40px;
   margin-bottom: 40px;
   margin-right: 50%;
+  padding: 4px 4px;
+  font-size: medium;
 }
 
 .board-container {
@@ -72,6 +74,10 @@ td {
 
 .player-two {
   color: red;
+}
+
+.unclickable {
+  pointer-events: none;
 }
 
 @media (max-width: 480px) {

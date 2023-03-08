@@ -1,13 +1,23 @@
+import { gameStatus } from "./win-loss-status.js";
+
 const gameBoard = (function() {
   'use strict';
 
   let boardSpots = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   const newBoardBtn = document.getElementById('new-game');
   newBoardBtn.addEventListener('click', resetBoard);
+  const placePieces = document.querySelectorAll('.piece-position');
   const player1 = createPlayer('player1', 'X');
   const player2 = createPlayer('player2', 'O');
   let currentPlayer = player1;
   const currentPlayerDiv = document.getElementById('current-player');
+
+  function createPlayer(name, piece) {
+    return {
+      name: name,
+      piece: piece
+    };
+  }
 
   function switchCurrentPlayer(current) {
     switchPlayerHTML(current)
@@ -28,13 +38,6 @@ const gameBoard = (function() {
       currentPlayerDiv.classList.add('player-one');
       currentPlayerDiv.innerText = "Player One's Turn: X";
     }
-  } 
-
-  function createPlayer(name, piece) {
-    return {
-      name: name,
-      piece: piece
-    };
   }
 
   function resetBoard(e) {
@@ -44,15 +47,17 @@ const gameBoard = (function() {
     changeSpots.forEach((spot) => {
       spot.classList.add('piece-position');
       spot.classList.remove('piece-position-taken');
+      spot.classList.remove('unclickable');
+      spot.innerText = " ";
     });
     const spots = document.querySelectorAll('.piece-position')
     spots.forEach((spot) => {
-      spot.innerText = " ";
+      spot.classList.remove('unclickable');
     });
+    switchCurrentPlayer(currentPlayer);
   }
 
   (function assignPlacing() {
-    const placePieces = document.querySelectorAll('.piece-position');
     placePieces.forEach((current) => {
       current.addEventListener('click', placePiece);
     });
@@ -65,7 +70,11 @@ const gameBoard = (function() {
       e.target.innerText = currentPlayer.piece;
       e.target.classList.add('piece-position-taken')
       e.target.classList.remove('piece-position')
-      switchCurrentPlayer(currentPlayer);
+      if (gameStatus.checkStatus(boardSpots, currentPlayer)) {
+        endGame();
+      } else {
+        switchCurrentPlayer(currentPlayer);
+      }
     } else {
       console.log("cannot place");
     }
@@ -81,9 +90,16 @@ const gameBoard = (function() {
     }
   }
 
+  function endGame() {
+    gameStatus.resetStatus();
+    placePieces.forEach((spot) => {
+        spot.classList.add('unclickable');
+    });
+  }
+
   return {
-    boardSpots: boardSpots
-  };
+    boardSpots: boardSpots, currentPlayer: currentPlayer
+  }
 
  })();
  
