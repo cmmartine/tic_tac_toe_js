@@ -44,6 +44,7 @@ const gameStatus = (function() {
 
   function tieGame(boardSpots) {
     if (!boardSpots.includes(0)) {
+      winStatus = true;
       gameIsATie();
     }
   }
